@@ -84,7 +84,7 @@ body {
     padding-bottom: 6.5rem; */
     position: fixed;
     width: 100%;
-    top: 9.2rem;
+    top: 9.25rem;
     bottom: 6.5rem;
 	/* margin: 0 auto; */
     /* border-radius: 12px; border: solid 1.2px #f6f7fa; */
@@ -1023,8 +1023,8 @@ input:checked + label > .knob > i:before {
 
 .opinion-content {
 	max-width: 97%;
-	padding-top: 0.6rem;
-	padding-bottom: 0.9rem;
+	padding-top: 0.7rem;
+	padding-bottom: 1rem;
 	font-family: 'CookieRunOTF-Bold';
 	font-size: 1.6rem;
 	color: rgb(17, 30, 51);

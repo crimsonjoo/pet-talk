@@ -73,7 +73,7 @@
     
 .opinion-title-2 {
 
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
   color: #222647;
 	font-size: 2rem;
 	font-family: 'GmarketSansBold';
@@ -82,8 +82,8 @@
 .animal-explain-2 {
   line-height: 1.6rem;
   padding: 0 2rem;
-  padding-top: 0.5rem;
-	padding-bottom: 1.5rem;
+  padding-top: 0.3rem;
+	padding-bottom: 1rem;
 	font-family: 'CookieRun-Regular';
 	font-size: 1.5rem;
 	color: white;
@@ -99,7 +99,7 @@
 	color: white;
   margin: 0 auto;
   padding: 0 2rem;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1rem;
 }
 
 .file-upload-image-2 {
@@ -121,15 +121,15 @@
 
 
 .cat-face-animal-title {
-  	padding-top: 0.2rem;
-	padding-bottom: 1.5rem;
+  	/* padding-top: 0.2rem; */
+	padding-bottom: 1.3rem;
 	color: rgb(31, 30, 30);
 	font-size: 2.5rem;
 	font-family: 'CookieRunOTF-Bold';
 }
 .dog-face-animal-title {
-  padding-top: 0.2rem;
-	padding-bottom: 1.5rem;
+  /* padding-top: 0.2rem; */
+	padding-bottom: 1.3rem;
 	color: rgb(31, 30, 30);
 	font-size: 2.5rem;
 	font-family: 'CookieRunOTF-Bold';

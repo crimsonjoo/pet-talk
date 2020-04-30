@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+@import "reset.css";
+@import "header.css";
+@import "nav-bar.css";
+@import "cat.css";
+@import "block.css";
+@import "dog.css";
+@import "user.css";
+@import "shop.css";
+@import "index.css";
+@import "inputbox.css";
+
+
+body {
+  background-color: #fac087;
+  /* padding: 10px 20px; */
+  color: black;
+  font-family: "MapoPeacefull";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes nav-move {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.nav {
+  animation: nav-move 1s ease-out forwards;
+}
+

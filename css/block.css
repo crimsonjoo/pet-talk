@@ -1,0 +1,24 @@
+.blockscreen {
+  background-color: #20314e;
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+font-weight:600;
+  color: aliceblue;
+  text-align: center;
+  line-height: 60px;
+  display: none;
+}
+
+@media screen and (min-width: 460px) {
+  .blockscreen {
+    display: flex;
+  }
+}

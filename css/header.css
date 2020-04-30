@@ -1,0 +1,34 @@
+.header {
+  background: linear-gradient(to bottom, #a2dcfc, rgb(122, 175, 204));
+  box-shadow : 2px 2px 5px rgb(97, 97, 97);
+  text-align: center;
+  width: 100%;
+  padding: 2.4rem 0;
+}
+
+.header .header-title {
+  font-family: 'CookieRun-Regular';
+  color: white;
+  font-size: 3.5rem;
+  font-weight:600;
+}
+
+/* .header .header__header-column {
+  display: flex;
+
+} */
+
+/* .header .header__icons {
+  font-size: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+} */
+
+/* 
+.header .header__header-backbtn {
+  font-size: 25px;
+  margin-right: 20px;
+} */
+
+
+

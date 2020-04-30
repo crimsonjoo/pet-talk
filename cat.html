@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <script src="https://kit.fontawesome.com/67de00e73b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>catpage</title>
+</head>
+
+<body>
+  <div class="header">
+    <h1 class="header-title">고양이와 대화하기</h1>
+  </div>
+
+  <!-- <div class="page-intro">
+    <h1 class="intro1">당신의 고양이는 사실 수다쟁이랍니다</h1>
+  </div> -->
+
+
+  <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <div class="mt-3 container file-upload">
+    <div class="image-upload-wrap">
+      <input class="file-upload-input" type='file' id="file-input" onchange="readURL(this);" accept="image/*" />
+      <div class="drag-text">
+        <i class="fas fa-file-upload"></i>
+        <h3 class="mt-3 pt-3  upload-text1">사진 업로드</h3>
+        <h1 class="mt-4 pt-1 mb-3 upload-text3">※ 고양이 사진을 업로드해 고양이 언어를 번역하세요</h1>
+      </div>
+    </div>
+    <div class="file-upload-content">
+      <p class="text-bubble"></p>
+      <img class="file-upload-image" id="face-image" alt="your image" />
+      <div id="loading" class="mt-2 mb-3 animated bounce">
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+        <p class="mt-3 mb-3 text-center loading-ment">고양이 언어를 번역중입니다</p>
+      </div>
+      <p class="result-message"></p>
+      <div id="label-container" class="d-flex flex-column justify-content-around"></div>
+      <p class="result-opinion"></p>
+
+      <div class="pt-3 image-title-wrap">
+        <button type="button p-2" onclick="window.location.reload()" class="try-again-btn">
+          <span class="try-again-text-below">다른 사진으로 재번역</span>
+        </button>
+      </div>
+    </div>
+    <div id="exif" class="exif" style="display:none;">
+      <h2>Exif meta data</h2>
+      <p id="thumbnail" class="thumbnail" style="display:none;"></p>
+      <table></table>
+    </div>
+  </div>
+
+  <div class="nav_cover">
+  </div>
+
+  <nav class="nav">
+    <ul class="nav__list">
+      <li class="nav__list-items">
+        <a href="cat.html" class="nav__list-link catpage-cat"><i class="fas fa-cat"></i></a>
+      </li>
+      <li class="nav__list-items">
+        <a href="dog.html" class="nav__list-link catpage-dog">
+          <i class="fas fa-dog"></i>
+        </a>
+      </li>
+      <li class="nav__list-items">
+        <a href="user.html" class="nav__list-link catpage-user"><i class="fas fa-user"></i></a>
+      </li>
+      <li class="nav__list-items">
+        <a href="shop.html" class="nav__list-link catpage-shop"><i class="fas fa-store"></i></a>
+      </li>
+    </ul>
+  </nav>
+  <div class="blockscreen">
+    Please make your screen smaller
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-load-image/2.18.0/load-image.all.min.js"></script>
+  <script src="script.js"></script>
+
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('.image-upload-wrap').hide();
+          $('#loading').show();
+          $('.file-upload-image').attr('src', e.target.result);
+          $('.file-upload-content').show();
+          $('.image-title').html(input.files[0].name);
+        };
+        reader.readAsDataURL(input.files[0]);
+        init().then(function () {
+          console.log("hello");
+          predict();
+          $('#loading').hide();
+        });
+      } else {
+        removeUpload();
+      }
+    }
+
+    function removeUpload() {
+      $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+      $('.file-upload-content').hide();
+      $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+      $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+      $('.image-upload-wrap').removeClass('image-dropping');
+    });
+  </script>
+
+  <script type="text/javascript">
+
+    const URL1 = "https://teachablemachine.withgoogle.com/models/19HIUkOOg/";
+    let model, webcam, labelContainer, maxPredictions;
+    async function init() {
+      const modelURL = URL1 + "model.json";
+      const metadataURL = URL1 + "metadata.json";
+      model = await tmImage.load(modelURL, metadataURL);
+      maxPredictions = model.getTotalClasses();
+      labelContainer = document.getElementById("label-container");
+      for (let i = 0; i < maxPredictions; i++) {
+        var element = document.createElement("div")
+        element.classList.add("statement");
+        labelContainer.appendChild(element);
+      }
+    }
+    async function predict() {
+      var image = document.getElementById("face-image")
+      const prediction = await model.predict(image, false);
+      prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+      console.log(prediction[0].className);
+      var resultTitle, resultExplain, resultName, resultOpinion, opinionTitle, explainTitle;
+      switch (prediction[0].className) {
+        case "1affection":
+          resultTitle = "기분좋고 너무 행복하다냥!"
+          resultExplain = "귀하는 정상입니다. 정말 풍성하시네요!"
+          resultName = 'normal'
+          resultOpinion = '행복한 고양이를 충분히 쓰다듬고 안아주세요'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "2angry":
+          resultTitle = "나 화났다냥! 건들지마라냥!"
+          resultExplain = "2000-2500모"
+          resultName = 'talmo1'
+          resultOpinion = '지금은 고양이를 쓰다듬거나 쳐다보지 마세요!'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "3anxious":
+          resultTitle = "불안하고 조금 긴장된다냥"
+          resultExplain = "2500~3000모"
+          resultName = 'talmo2'
+          resultOpinion = '지금은 큰 동작이나 소리 내는것을 자제해주세요'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "4attentive":
+          resultTitle = " 관찰 대상을 포착했다냥!"
+          resultExplain = "3000-3500모"
+          resultName = 'talmo3'
+          resultOpinion = '고양이가 현재 집중관찰 중인 대상은 무엇일까요?'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "5interested":
+          resultTitle = "이..이게 뭐냥!? 신기하다냥!"
+          resultExplain = "3500-4000모"
+          resultName = 'talmo4'
+          resultOpinion = '고양이의 호기심을 자극하는 것이 과연 무엇일까요?'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "6playful":
+          resultTitle = "신난다냥! 같이 놀자냥~"
+          resultExplain = "4000-4500모"
+          resultName = 'talmo5'
+          resultOpinion = '평소 좋아하던 장난감으로 놀아주는 건 어때요?'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "7relaxed":
+          resultTitle = "편안하고 만족스럽구냥"
+          resultExplain = "4500-5000모"
+          resultName = 'talmo6'
+          resultOpinion = '현재 포근함을 느끼며 보호받고 있다고 느끼고 있네요'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "8scared":
+          resultTitle = "가까이 오지 마라냥!"
+          resultExplain = "5000-7000모"
+          resultName = 'talmo7'
+          resultOpinion = '지금은 고양이에게 다가가거나 관심을 주지마세요'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        case "9stressout":
+          resultTitle = "스트레스 받았었다냥"
+          resultExplain = "7000모 이상"
+          resultName = 'talmo8'
+          resultOpinion = '무엇이 고양이에게 스트레스를 주고 있었을까요?'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+          break;
+        default:
+          resultTitle = "치명적 오류"
+          resultExplain = "다른 사진으로 재시도해주세요"
+          resultName = 'unknown'
+          resultOpinion = '다른 사진으로 재시도해주세요'
+          opinionTitle = '분석 및 진단'
+          explainTitle = '모발이식 견적'
+      }
+      var title = "<div class='" + resultName + "-animal-title'>" + resultTitle + "</div>"
+      var explain = "<div class='explain-title'>" + explainTitle + "</div>" + "<div class='animal-explain pt-2'>" + resultExplain + "</div>"
+      var opinion = "<div class='opinion-content'>" + resultOpinion + "</div>"
+      $('.text-bubble').html(title);
+      // $('.result-message').html(explain);
+      $('.result-opinion').html(opinion);
+      var barWidth;
+      for (let i = 0; i < maxPredictions; i++) {
+        if (prediction[i].probability.toFixed(2) > 0.1) {
+          barWidth = Math.round(prediction[i].probability.toFixed(2) * 100) + "%";
+        } else if (prediction[i].probability.toFixed(2) >= 0.01) {
+          barWidth = "4%"
+        } else {
+          barWidth = "2%"
+        }
+        var labelTitle;
+        switch (prediction[i].className) {
+          case "1affection":
+            labelTitle = "행복"
+            labelName = "affection"
+            break;
+          case "2angry":
+            labelTitle = "분노"
+            labelName = "angry"
+            break;
+          case "3anxious":
+            labelTitle = "걱정"
+            labelName = "anxious"
+            break;
+          case "4attentive":
+            labelTitle = "긴장"
+            labelName = "attentive"
+            break;
+          case "5interested":
+            labelTitle = "흥미"
+            labelName = "interested"
+            break;
+          case "6playful":
+            labelTitle = "장난기"
+            labelName = "playful"
+            break;
+          case "7relaxed":
+            labelTitle = "편안"
+            labelName = "relaxed"
+            break;
+          case "8scared":
+            labelTitle = "두려움"
+            labelName = "scared"
+            break;
+          case "9stressout":
+            labelTitle = "스트레스"
+            labelName = "stressed"
+            break;
+          default:
+            labelTitle = "알수없음"
+            labelName = "unknown"
+        }
+        var label = "<div class='animal-label'>" + labelTitle + "</div>"
+        var bar = "<div class='bar-container position-relative container'><div class='" + labelName + "-box'></div><div class='d-flex justify-content-center align-items-center " + labelName + "-bar' style='width: " + barWidth + "'><span class='d-block percent-text'>" + Math.round(prediction[i].probability.toFixed(2) * 100) + "%</span></div></div>"
+        labelContainer.childNodes[i].innerHTML = label + bar;
+      }
+    }
+  </script>
+</body>
+
+<!-- Copyright (c) 2020 by Sean Naughton (https://codepen.io/kiligan/pen/HfJFB)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+
+
+
+</html>

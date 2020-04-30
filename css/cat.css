@@ -1,0 +1,44 @@
+.nav__list-link.catpage-cat {
+  color: whitesmoke;
+}
+
+.nav__list-link.catpage-dog {
+  color: rgba(139, 136, 136, 0.856);
+}
+
+.nav__list-link.catpage-user {
+  color: rgba(139, 136, 136, 0.856);
+}
+
+.nav__list-link.catpage-shop {
+  color: rgba(139, 136, 136, 0.856);
+}
+
+.page-intro {
+  text-align: center;
+}
+
+.intro1 {
+  font-family: 'CookieRun-Regular';
+  font-weight: 800;
+  padding-top: 1.3rem;
+  font-size: 1.7rem;
+  color: rgb(63, 58, 58);
+
+}
+
+/* .intro2 {
+  font-family: 'CookieRun-Regular';
+  font-weight: 500;
+  padding-top: 1.5rem;
+  font-size: 1.5rem;
+  color: #15233a;
+} */
+
+/* .intro3 {
+  font-family: 'CookieRun-Regular';
+  font-weight: 500;
+  padding-top: 1rem;
+  font-size: 2rem;
+  color: #20314e;
+} */

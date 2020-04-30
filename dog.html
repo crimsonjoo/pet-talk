@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://kit.fontawesome.com/67de00e73b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>dogpage</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__header-column">
+            <h1 class="header-title">강아지와 대화하기</h1>
+        </div>
+    </header>
+
+    <!-- <div class="page-intro">
+        <h1 class="intro1">당신의 강아지는 사실 수다쟁이랍니다</h1>
+    </div> -->
+
+
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <div class="mt-3 container file-upload">
+        <div class="image-upload-wrap">
+            <input class="file-upload-input" type='file' id="file-input" onchange="readURL(this);"
+                accept="image/*" />
+            <div class="drag-text">
+                <i class="fas fa-file-upload"></i>
+                <h3 class="mt-3 pt-3  upload-text1">사진 업로드</h3>
+                <!-- <h3 class="pb-4 pt-2  upload-text2">업로드</h3> -->
+                <h1 class="mt-4 pt-1 mb-3 upload-text3">※ 강아지 사진을 업로드해 강아지 언어를 번역하세요</h1>
+            </div>
+        </div>
+        <div class="file-upload-content">
+            <p class="text-bubble"></p>
+            <img class="file-upload-image" id="face-image" alt="your image" />
+            <div id="loading" class="mt-2 mb-3 animated bounce">
+                <div class="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <p class="mt-3 mb-3 text-center loading-ment">강아지 언어를 번역중입니다</p>
+            </div>
+            <p class="result-message"></p>
+            <div id="label-container" class="d-flex flex-column justify-content-around"></div>
+            <p class="result-opinion"></p>
+
+            <div class="pt-3 image-title-wrap">
+                <button type="button p-2" onclick="window.location.reload()" class="try-again-btn">
+                    <span class="try-again-text-below">다른 사진으로 재번역</span>
+                </button>
+            </div>
+        </div>
+        <div id="exif" class="exif" style="display:none;">
+            <h2>Exif meta data</h2>
+            <p id="thumbnail" class="thumbnail" style="display:none;"></p>
+            <table></table>
+        </div>
+    </div>
+
+    <div class="nav_cover">
+    </div>
+
+    <nav class="nav">
+        <ul class="nav__list">
+            <li class="nav__list-items">
+                <a href="cat.html" class="nav__list-link dogpage-cat"><i class="fas fa-cat"></i></a>
+            </li>
+            <li class="nav__list-items">
+                <a href="dog.html" class="nav__list-link dogpage-dog">
+                    <i class="fas fa-dog"></i>
+                </a>
+            </li>
+            <li class="nav__list-items">
+                <a href="user.html" class="nav__list-link dogpage-user"><i class="fas fa-user"></i></a>
+            </li>
+            <li class="nav__list-items">
+                <a href="shop.html" class="nav__list-link dogpage-shop"><i class="fas fa-store"></i></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="blockscreen">
+        Please make your screen smaller
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-load-image/2.18.0/load-image.all.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('.image-upload-wrap').hide();
+          $('#loading').show();
+          $('.file-upload-image').attr('src', e.target.result);
+          $('.file-upload-content').show();
+          $('.image-title').html(input.files[0].name);
+        };
+        reader.readAsDataURL(input.files[0]);
+        init().then(function () {
+          console.log("hello");
+          predict();
+          $('#loading').hide();
+        });
+      } else {
+        removeUpload();
+      }
+    }
+
+    function removeUpload() {
+      $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+      $('.file-upload-content').hide();
+      $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+      $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+      $('.image-upload-wrap').removeClass('image-dropping');
+    });
+  </script>
+
+    <script type="text/javascript">
+
+        const URL2 = "https://teachablemachine.withgoogle.com/models/7EOQDg2Ns/";
+        let model, webcam, labelContainer, maxPredictions;
+        async function init() {
+            const modelURL = URL2 + "model.json";
+            const metadataURL = URL2 + "metadata.json";
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                var element = document.createElement("div")
+                element.classList.add("statement");
+                labelContainer.appendChild(element);
+            }
+        }
+        async function predict() {
+            var image = document.getElementById("face-image")
+            const prediction = await model.predict(image, false);
+            prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+            console.log(prediction[0].className);
+            var resultTitle, resultExplain, resultName, resultOpinion, opinionTitle, explainTitle;
+            switch (prediction[0].className) {
+                case "1affection":
+                    resultTitle = "내 사랑을 받아주시개"
+                    resultExplain = "귀하는 정상입니다. 정말 풍성하시네요!"
+                    resultName = 'normal'
+                    resultOpinion = '강아지에게 받은 관심과 애정표현을 돌려주세요!'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "2angry":
+                    resultTitle = "날 더 이상 자극하지 마시개!"
+                    resultExplain = "2000-2500모"
+                    resultName = 'talmo1'
+                    resultOpinion = '화가 단단히 난 강아지를 더이상 자극하지 마세요!'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "3curious":
+                    resultTitle = "궁금하니 나도 알려주시개"
+                    resultExplain = "2500~3000모"
+                    resultName = 'talmo2'
+                    resultOpinion = '강아지에겐 이 광경이 엄청 신기한가봐요!'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "4happy":
+                    resultTitle = "지금이 가장 행복하개"
+                    resultExplain = "3000-3500모"
+                    resultName = 'talmo3'
+                    resultOpinion = '행복한 강아지를 충분히 쓰다듬고 안아주세요'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "5needspace":
+                    resultTitle = "제발...이제 그만하시개"
+                    resultExplain = "3500-4000모"
+                    resultName = 'talmo4'
+                    resultOpinion = '강아지에게 큰소리치지 말고 너그럽게 안아주세요'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "6peaceful":
+                    resultTitle = "평화롭고 만족스럽개!"
+                    resultExplain = "4000-4500모"
+                    resultName = 'talmo5'
+                    resultOpinion = '혼자만의 평화로운 시간을 즐기게 배려해주세요'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "7playful":
+                    resultTitle = "같이 놀아주시개!"
+                    resultExplain = "4500-5000모"
+                    resultName = 'talmo6'
+                    resultOpinion = '잔뜩 신이난 강아지와 함께 놀아주는거 어때요?'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "8scared":
+                    resultTitle = "무섭개..날 내버려두시개"
+                    resultExplain = "5000-7000모"
+                    resultName = 'talmo7'
+                    resultOpinion = '겁먹은 강아지에게 억지로 접근하지 말아주세요'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "9stressed":
+                    resultTitle = "스트레스를 받고 있었개"
+                    resultExplain = "7000모 이상"
+                    resultName = 'talmo8'
+                    resultOpinion = '무엇이 강아지에게 스트레스를 주고 있었을까요?'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                case "10trusting":
+                    resultTitle = "저는 당신을 믿고있개! "
+                    resultExplain = "7000모 이상"
+                    resultName = 'talmo9'
+                    resultOpinion = '당신을 전적으로 신뢰하네요! 배를 만져주세요 :)'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+                    break;
+                default:
+                    resultTitle = "치명적 오류"
+                    resultExplain = "다른 사진으로 재시도해주세요"
+                    resultName = 'unknown'
+                    resultOpinion = '다른 사진으로 재시도해주세요'
+                    opinionTitle = '분석 및 진단'
+                    explainTitle = '모발이식 견적'
+            }
+            var title = "<div class='" + resultName + "-animal-title'>" + resultTitle + "</div>"
+            var explain = "<div class='explain-title'>" + explainTitle + "</div>" + "<div class='animal-explain pt-2'>" + resultExplain + "</div>"
+            var opinion = "<div class='opinion-content'>" + resultOpinion + "</div>"
+            $('.text-bubble').html(title);
+            // $('.result-message').html(title + explain);
+            $('.result-opinion').html(opinion);
+            var barWidth;
+            for (let i = 0; i < maxPredictions; i++) {
+                if (prediction[i].probability.toFixed(2) > 0.1) {
+                    barWidth = Math.round(prediction[i].probability.toFixed(2) * 100) + "%";
+                } else if (prediction[i].probability.toFixed(2) >= 0.01) {
+                    barWidth = "4%"
+                } else {
+                    barWidth = "2%"
+                }
+                var labelTitle;
+                switch (prediction[i].className) {
+                    case "1affection":
+                        labelTitle = "애정"
+                        labelName = "affection"
+                        break;
+                    case "2angry":
+                        labelTitle = "분노"
+                        labelName = "angry"
+                        break;
+                    case "3curious":
+                        labelTitle = "궁금"
+                        labelName = "curious"
+                        break;
+                    case "4happy":
+                        labelTitle = "행복"
+                        labelName = "happy"
+                        break;
+                    case "5needspace":
+                        labelTitle = "눈치"
+                        labelName = "needspace"
+                        break;
+                    case "6peaceful":
+                        labelTitle = "평화로운"
+                        labelName = "peaceful"
+                        break;
+                    case "7playful":
+                        labelTitle = "장난기"
+                        labelName = "playful"
+                        break;
+                    case "8scared":
+                        labelTitle = "두려움"
+                        labelName = "scared"
+                        break;
+                    case "9stressed":
+                        labelTitle = "스트레스"
+                        labelName = "stressed"
+                        break;
+                    case "10trusting":
+                        labelTitle = "신뢰"
+                        labelName = "trusting"
+                        break;
+                    default:
+                        labelTitle = "알수없음"
+                        labelName = "unknown"
+                }
+                var label = "<div class='animal-label'>" + labelTitle + "</div>"
+                var bar = "<div class='bar-container position-relative container'><div class='" + labelName + "-box'></div><div class='d-flex justify-content-center align-items-center " + labelName + "-bar' style='width: " + barWidth + "'><span class='d-block percent-text'>" + Math.round(prediction[i].probability.toFixed(2) * 100) + "%</span></div></div>"
+                labelContainer.childNodes[i].innerHTML = label + bar;
+            }
+        }
+    </script>
+
+</body>
+
+
+<!-- Copyright (c) 2020 by Sean Naughton (https://codepen.io/kiligan/pen/HfJFB)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. -->
+
+
+</html>

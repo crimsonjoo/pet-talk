@@ -1,0 +1,26 @@
+.nav__list-link.dogpage-cat {
+    color: rgba(139, 136, 136, 0.856);
+}
+
+.nav__list-link.dogpage-dog {
+color: whitesmoke;
+}
+.nav__list-link.dogpage-user {
+    color: rgba(139, 136, 136, 0.856);
+}
+
+.nav__list-link.dogpage-shop {
+    color: rgba(139, 136, 136, 0.856);
+}
+
+.page-intro {
+    text-align: center;
+  }
+
+.intro1 {
+    font-family: 'CookieRun-Regular';
+    font-weight: 800;
+    padding-top: 1.3rem;
+    font-size: 1.7rem;
+    color: rgb(63, 58, 58);
+  }

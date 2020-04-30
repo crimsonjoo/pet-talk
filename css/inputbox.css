@@ -410,7 +410,7 @@ for old browsers */
 	margin: 0 auto;
 }
 
-.upload-text3 {
+.upload-text3-pre {
 	font-family:'yg-jalnan';
 	color: rgb(17, 30, 51);
 	width: 95%;
@@ -419,6 +419,16 @@ for old browsers */
 	text-align: center;
     margin: 0 auto;
     padding-top: 5rem;
+	padding-bottom: 0.1rem;
+}
+.upload-text3 {
+	font-family:'yg-jalnan';
+	color: rgb(17, 30, 51);
+	width: 95%;
+	font-size: 0.9rem;
+	line-height: 1.53;
+	text-align: center;
+    margin: 0 auto;
     padding-bottom: 5rem;
 }
 

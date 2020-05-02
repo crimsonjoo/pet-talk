@@ -199,15 +199,15 @@ body {
 .image-upload-wrap {
     width: 80%;
     margin: 0 auto;
-    margin-top: 8rem;
+    margin-top: 11%;
 	position: relative;
 	object-fit: contain;
 	border-radius: 10px;
 	border: dashed 3px rgba(223, 190, 106, 0);
     background-color: #ffffff;
-    padding: 10rem 0;
-    padding-bottom: 0rem;
-    /* padding-bottom: 5rem; */
+    padding: 12% 0;
+    /* padding-bottom: 0rem; */
+    
 }
 .image-dropping,
 .image-upload-wrap:hover {
@@ -418,7 +418,7 @@ for old browsers */
 	line-height: 1.53;
 	text-align: center;
     margin: 0 auto;
-    padding-top: 5rem;
+    padding-top: 8%;
 	padding-bottom: 0.1rem;
 }
 .upload-text3 {
@@ -429,7 +429,7 @@ for old browsers */
 	line-height: 1.53;
 	text-align: center;
     margin: 0 auto;
-    padding-bottom: 5rem;
+    padding-bottom: 0.1rem;
 }
 
 .footer {

@@ -226,7 +226,7 @@ body {
 	text-transform: uppercase;
 }
 .file-upload-image {
-	max-height: 20rem;
+	max-height: 19.5rem;
 	max-width: 30rem;
 	margin: auto;
     padding: 2.5px;
@@ -697,7 +697,7 @@ for old browsers */
 	height: 1.5rem;
 	border-radius: 10px;
 	width: 80%;
-	background-color: rgb(230, 201, 41,0.2);
+	background-color: rgb(241, 219, 34,0.2);
 }
 .needspace-bar {
 	max-width: 80%;
@@ -709,7 +709,7 @@ for old browsers */
 	left: 7rem;
 	height: 1.5rem;
 	border-radius: 10px;
-	background-color: rgb(230, 201, 41,1);
+	background-color: rgb(241, 219, 34,1);
 }
 .happy-box {
 	position: absolute;
@@ -1032,11 +1032,11 @@ input:checked + label > .knob > i:before {
 } */
 
 .opinion-content {
-	max-width: 97%;
-	padding-top: 0.7rem;
-	padding-bottom: 1rem;
+	/* max-width: 98%; */
+	padding-top: 0.8rem;
+	padding-bottom: 1.2rem;
 	font-family: 'CookieRunOTF-Bold';
-	font-size: 1.5rem;
+	font-size: 1.55rem;
 	color: rgb(17, 30, 51);
 	margin: 0;
 }

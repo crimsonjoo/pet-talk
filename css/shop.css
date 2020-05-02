@@ -313,8 +313,21 @@
 .try-again-text-shop {
 	font-family: 'yg-jalnan';
 	display: block;
-	font-size: 1.4rem;
+	font-size: 1.8rem;
 	text-align: center;
 	color: #ffffff;
 	padding: 0.1rem 0.4rem;
+}
+
+.cat-wrapper-shop {
+  width: 30%;
+  position : fixed;
+  bottom: 20%;
+  left: 10%;
+}
+  .dog-wrapper-shop {
+  width: 30%;
+  position : fixed;
+  bottom: 20%;
+  right : 10%
 }

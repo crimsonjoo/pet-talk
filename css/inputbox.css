@@ -126,7 +126,7 @@ body {
 .spinner {
 	position: fixed;
 	z-index: 4;
-	right: 25%;
+	right: 23%;
 	top: 2%;
     margin: 100px auto 0;
     width: 70px;

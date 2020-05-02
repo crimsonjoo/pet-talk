@@ -442,13 +442,13 @@ for old browsers */
 .animal-label {
 	/* padding-top: 2rem; padding-bottom: 2rem; */
 	position: absolute;
-	top: 0.3rem;
+	top: 0.4rem;
 	left: 0.3rem;
 	display: flex;
 	align-items: center;
 	/* justify-content: center; */
 	font-family: 'GmarketSansBold';
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 	color: rgb(8, 17, 31);
 	width: 6rem;
 	/* margin-bottom: 0.6rem; */

@@ -126,8 +126,8 @@ body {
 .spinner {
 	position: fixed;
 	z-index: 4;
-	right: 8.3rem;
-	top: 1.7rem;
+	right: 20%;
+	top: 2%;
     margin: 100px auto 0;
     width: 70px;
     text-align: center;
@@ -1036,9 +1036,9 @@ input:checked + label > .knob > i:before {
 	padding-top: 0.7rem;
 	padding-bottom: 1rem;
 	font-family: 'CookieRunOTF-Bold';
-	font-size: 1.6rem;
+	font-size: 1.5rem;
 	color: rgb(17, 30, 51);
-	margin: 0 auto;
+	margin: 0;
 }
 
 
@@ -1102,8 +1102,8 @@ p.text-bubble {
 
 	position: absolute;
 	right: 1.5rem;
-	width: 20rem;
-	height: 5rem;
+	width: 48%;
+	height: 7%;
 	
 	/* font-size: 24px; */
 	/* line-height: 100px; */
@@ -1127,8 +1127,8 @@ p.text-bubble {
 	/* box-shadow: 0.1rem 0.1rem 0.2rem #777; */
 
 	position: absolute;
-	left: 6rem;
-	top: 5rem;
+	left: 30%;
+	bottom: -55%;
 	
   }
   
